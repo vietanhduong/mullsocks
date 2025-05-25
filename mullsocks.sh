@@ -139,6 +139,18 @@ function get_account_from_container() {
   }
 }
 
+# Try to get the account from the config directory
+function get_account_from_config_dir() {
+  if [ -f "$CONFIG_DIR/device.json" ] && grep "logged_in" "${CONFIG_DIR}/device.json" >/dev/null; then
+    grep "account_number" "${CONFIG_DIR}/device.json" | grep -Po '(\d+)'
+  fi
+}
+
+if [ -z "$ACCOUNT" ]; then
+  # Try to get the account from the config directory
+  ACCOUNT=$(get_account_from_config_dir || echo "")
+fi
+
 # If the args is empty, we will try to read it from the container (if it exists)
 if [ -z "$ACCOUNT" ]; then
   ACCOUNT=$(get_account_from_container || {
