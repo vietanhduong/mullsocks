@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM --platform=${BUILDPLATFORM} ubuntu:24.04
 
 LABEL maintainer="Viet-Anh Duong <vietanhs0817@gmail.com>"
 LABEL org.opencontainers.image.source=https://github.com/vietanhduong/mullsocks-proxy
