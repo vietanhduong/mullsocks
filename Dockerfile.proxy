@@ -1,0 +1,22 @@
+FROM ubuntu:24.04
+
+LABEL maintainer="Viet-Anh Duong <vietanhs0817@gmail.com>"
+LABEL org.opencontainers.image.source=https://github.com/vietanhduong/mullsocks-proxy
+LABEL org.opencontainers.image.description="A proxy for Mullsocks container."
+LABEL org.opencontainers.image.licenses=MIT
+
+RUN apt-get update -y && apt-get install -y \
+  ca-certificates \
+  nginx-full \
+  curl
+
+RUN apt-get clean -y && \
+  rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
+
+COPY proxy.conf /etc/nginx/nginx.conf
+
+# Skip test nginx config file here, this might lead to an error caused the mullsocks hosts
+# cannot be resolved at build time.
+
+ENTRYPOINT [ "nginx" ]
+CMD [ "-g", "daemon off;" ]

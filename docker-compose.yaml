@@ -1,0 +1,28 @@
+services:
+  mullsocks:
+    build:
+      context: .
+    image: ghcr.io/vietanhduong/mullsocks:v0.1.0
+    cgroup: host
+    container_name: mullsocks
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: 1
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - .config:/etc/mullvad
+
+  proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy
+    image: ghcr.io/vietanhduong/mullsocks-proxy:v0.1.0
+    container_name: mullsocks-proxy
+    restart: unless-stopped
+    depends_on:
+      - mullsocks
+    ports:
+      - ${SOCK5_PORT:-1080}:1080
