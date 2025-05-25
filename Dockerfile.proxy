@@ -1,7 +1,7 @@
 FROM --platform=${BUILDPLATFORM} ubuntu:24.04
 
 LABEL maintainer="Viet-Anh Duong <vietanhs0817@gmail.com>"
-LABEL org.opencontainers.image.source=https://github.com/vietanhduong/mullsocks-proxy
+LABEL org.opencontainers.image.source=https://github.com/vietanhduong/mullsocks
 LABEL org.opencontainers.image.description="A proxy for Mullsocks container."
 LABEL org.opencontainers.image.licenses=MIT
 
